@@ -1,5 +1,5 @@
-import 'package:doja_test/webview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dojah_financial/flutter_dojah_financial.dart';
 
 void main() {
   runApp(const MyApp());
@@ -50,6 +50,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  final dojahFinancial = DojahFinancial(
+    appId: '60d4aebc1e90de0033ad14ad',
+    publicKey: 'test_pk_oqKIovYvOO9b3H9SPCny143yq',
+  );
+
+  void callBack(value) {
+    print(value);
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -105,12 +113,17 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
+                dojahFinancial.open(context, success: (value) {
+                  print('success home: $value');
+                }, error: (err) {
+                  print('error: $err');
+                });
+                /*Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const WebviewScreen(),
                   ),
-                );
+                );*/
               },
               child: const Text('Open in browser'),
             ),
